@@ -18,6 +18,10 @@ class ConfigDefinition extends BaseConfigDefinition
             ->children()
                 ->scalarNode('searchQuery')
                 ->end()
+                ->scalarNode('pageSize')
+                ->end()
+                ->scalarNode('pageFrom')
+                ->end()
             ->end()
         ;
         // @formatter:on

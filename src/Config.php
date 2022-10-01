@@ -8,9 +8,20 @@ use Keboola\Component\Config\BaseConfig;
 
 class Config extends BaseConfig
 {
-    // @todo implement your custom getters
     public function getSearchQuery(): string
     {
-        return (string) $this->getValue(['parameters', 'searchQuery']);
+        return (string)$this->getValue(['parameters', 'searchQuery']);
+    }
+
+    public function getPaginationParams(): string
+    {
+        return (string)http_build_query([
+            'page' =>
+                [
+                    'size' => $this->getValue(['parameters', 'pageSize']),
+                    'from' => $this->getValue(['parameters', 'pageFrom'])
+                ]
+        ]
+        );
     }
 }
