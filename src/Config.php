@@ -11,6 +11,6 @@ class Config extends BaseConfig
     // @todo implement your custom getters
     public function getSearchQuery(): string
     {
-        return $this->getValue(['parameters', 'searchQuery']);
+        return (string) $this->getValue(['parameters', 'searchQuery']);
     }
 }
