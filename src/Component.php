@@ -2,15 +2,44 @@
 
 declare(strict_types=1);
 
-namespace MyComponent;
+namespace NasaExtractor;
 
 use Keboola\Component\BaseComponent;
+use Keboola\Csv\CsvWriter;
 
 class Component extends BaseComponent
 {
     protected function run(): void
     {
-        // @TODO implement
+        $client = new \GuzzleHttp\Client();
+
+        $uri = 'https://ntrs.nasa.gov/api/citations/search?' . $this->getConfig()->getSearchQuery();
+
+        $response = $client->get($uri);
+
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        $writer = new CsvWriter(__DIR__ . '/../data/out/tables/nasa.csv');
+        $writer->writeRow(['id', 'data', 'fulltext']);
+        foreach ($data['results'] as $item) {
+            $id = $item["id"];
+            $downloadUrl = "https://ntrs.nasa.gov/api/citations/$id/downloads";
+            $this->getLogger()->info("Downloading $downloadUrl");
+            try {
+                $detailData = json_decode($client->get($downloadUrl)->getBody()->getContents(), true);
+            }
+            catch(\Throwable $e) {
+                echo "no detail found \n";
+                continue;
+            }
+            $fullTextLink = 'https://ntrs.nasa.gov/' . $detailData[0]['links']['fulltext'];
+            try {
+                $fulltextContent = $client->get($fullTextLink)->getBody()->getContents();
+            } catch (\GuzzleHttp\Exception\RequestException $e) {
+                var_dump($e->getMessage());exit();
+            }
+            $writer->writeRow([$id, json_encode([$item]), json_encode(['data' => $fulltextContent])]);
+        }
     }
 
     protected function getConfigClass(): string

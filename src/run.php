@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Keboola\Component\Logger;
 use Keboola\Component\UserException;
-use MyComponent\Component;
+use NasaExtractor\Component;
 
 require __DIR__ . '/../vendor/autoload.php';
 

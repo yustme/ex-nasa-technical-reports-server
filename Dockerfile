@@ -28,6 +28,8 @@ ENV LC_ALL=en_US.UTF-8
 # First copy only composer files
 COPY composer.* /code/
 
+RUN sed -i 's/\r$//' /tmp/composer-install.sh
+
 # Download dependencies, but don't run scripts or init autoloaders as the app is missing
 RUN composer install $COMPOSER_FLAGS --no-scripts --no-autoloader
 

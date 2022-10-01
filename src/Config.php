@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace MyComponent;
+namespace NasaExtractor;
 
 use Keboola\Component\Config\BaseConfig;
 
 class Config extends BaseConfig
 {
     // @todo implement your custom getters
-    public function getFoo(): string
+    public function getSearchQuery(): string
     {
-        return $this->getStringValue(['parameters', 'foo']);
+        return $this->getValue(['parameters', 'searchQuery']);
     }
 }

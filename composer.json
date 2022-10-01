@@ -4,6 +4,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "guzzlehttp/guzzle": "^7.5",
+        "keboola/csv": "^3.1",
         "keboola/php-component": "^9.0"
     },
     "require-dev": {
@@ -17,13 +19,13 @@
     },
     "autoload": {
         "psr-4": {
-            "MyComponent\\": "src/"
+            "NasaExtractor\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MyComponent\\Tests\\": "tests/phpunit/",
-            "MyComponent\\FunctionalTests\\": "tests/functional/"
+            "NasaExtractor\\Tests\\": "tests/phpunit/",
+            "NasaExtractor\\FunctionalTests\\": "tests/functional/"
         }
     },
     "scripts": {
@@ -51,6 +53,7 @@
     },
     "config": {
         "sort-packages": true,
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": true
     }
 }
